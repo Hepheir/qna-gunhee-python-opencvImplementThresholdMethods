@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "app"
+version = "0.1.0"
+description = ""
+authors = ["Hepheir <hepheir@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.7,<3.11"
+opencv-python = "^4.5.4"
+matplotlib = "^3.5.1"
+
+[tool.poetry.dev-dependencies]
+black = {version = "^21.12b0", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
