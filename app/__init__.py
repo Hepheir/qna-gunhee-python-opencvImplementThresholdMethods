@@ -1,14 +1,11 @@
-import typing
-
 import cv2
-import numpy as np
 
 
-def my_threshold(src: np.ndarray,
-                 thresh: int,
-                 maxval: int,
+def my_threshold(src,
+                 thresh,
+                 maxval,
                  type,
-                 dst: typing.Optional[np.ndarray] = None) -> typing.Any:
+                 dst = None):
     """영상을 흑/백으로 분류하여 처리하는 것-> 이때 기준이 되는 임계값을 어떻게 결정, 임계값보다 크면 백, 작으면 흑
     item()은 특정한 row와 column 화소값 읽어오기 가능
     itemset()은 세팅 가능
@@ -64,16 +61,16 @@ def my_threshold(src: np.ndarray,
     return thresh, dst
 
 
-def my_adaptiveThreshold(src: np.ndarray, # 원본 이미지
-                         maxValue: int, # 새로 넣을 값
-                         adaptiveMethod: int, # 임계값을 정하는 방법
-                         thresholdType: int, # 임계값으로 이미지를 어떻게 바꿀지
-                         blockSize: int, # 필터 적용할 커널 크기
-                         C: int) -> typing.Any: # 잘 모르겠음
+def my_adaptiveThreshold(src, # 원본 이미지
+                         maxValue, # 새로 넣을 값
+                         adaptiveMethod, # 임계값을 정하는 방법
+                         thresholdType, # 임계값으로 이미지를 어떻게 바꿀지
+                         blockSize, # 필터 적용할 커널 크기
+                         C): # 잘 모르겠음
     height = src.shape[0]
     width = src.shape[1]
 
-    dst = src.copy()
+    dst = src.copy() # 원본을 수정하지 않게 복사함.
 
     if adaptiveMethod == cv2.ADAPTIVE_THRESH_GAUSSIAN_C:
         threshold_img = cv2.GaussianBlur(src, (blockSize, blockSize), 0) - C
@@ -128,7 +125,7 @@ def my_adaptiveThreshold(src: np.ndarray, # 원본 이미지
 
 
 
-def prob_1(image: np.ndarray):
+def prob_1(image):
     """① cv2.threshold와 cv2.adaptiveThreshold를 이용하여 <그림 1>과 같은 결과가 나타나도록 하시오."""
     picture_a = image
     picture_b = cv2.threshold(image, 125, 255, cv2.THRESH_BINARY)[1]
@@ -140,7 +137,7 @@ def prob_1(image: np.ndarray):
     return
 
 
-def prob_2(image: np.ndarray):
+def prob_2(image):
     """② cv2.threshold 기능을 수행하는 함수를 직접 작성하여 <그림 1>(b)와 같은 결과가 나타나도록 하시오."""
     thresh_bin = my_threshold(image, 125, 255, cv2.THRESH_BINARY)[1]
     thresh_bin_inv = my_threshold(image, 125, 255, cv2.THRESH_BINARY_INV)[1]
@@ -152,7 +149,7 @@ def prob_2(image: np.ndarray):
     return
 
 
-def prob_3(image: np.ndarray):
+def prob_3(image):
     """③ cv2.adaptiveThreshold 기능을 수행하는 함수를 직접 작성하여 <그림 1>(c)와 같은 결과가 나타나도록 하시오."""
     adaptive_mean_thresh = my_adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 15, 2)
     adaptive_gaussian_thresh = my_adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 15, 2)
